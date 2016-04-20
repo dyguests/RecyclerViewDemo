@@ -38,7 +38,161 @@ activity_linear_layout_manager.xml
 
 ### 2.2.在java中添加RecyclerView
 
-#### 2.3.绑定
+LinearLayoutManagerActivity.java
+
+#### 2.2.1.绑定
 
 `mRecyclerView = ((RecyclerView) findViewById(R.id.recycler_view));`
 
+#### 2.2.2.加`LayoutManager`(布局方式)
+
+```
+mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL/*方向*/,
+                false/*是否反向*/
+        ));
+```
+
+注:这里用`LinearLayoutManager`表示这是使用线性布局,也可以使用`GridLayoutManager`等.
+
+#### 2.2.3.绑定Adapter(参考 2.3.创建Adapter)
+
+```
+mAdapter = new LinearLayoutManagerAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+```
+
+#### 2.2.4.添加数据
+
+```
+...
+mAdapter.addItem(user);
+...
+```
+也可以使用
+```
+...
+mAdapter.addItems(users);
+...
+```
+
+注:`addItem()`,`addItems()`方法是自定义的,主要是为了把数据添加操作和动画放在一起.
+
+### 2.3.创建Adapter
+
+#### 2.3.1.创建`LinearLayoutManagerAdapter`类
+
+```
+public class LinearLayoutManagerAdapter{
+    
+}
+```
+
+#### 2.3.2.让类继承`RecyclerView.Adapter`
+
+```
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter{
+    
+}
+```
+
+#### 2.3.3.注意,`RecyclerView.Adapter`是泛型类,需要一个继承至`RecyclerView.ViewHolder`的泛型参数(?),这里我们创建一个`ViewHolder`的内部类:
+
+```
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter{
+    
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        
+    }
+}
+```
+
+#### 2.3.4.添加泛型声明
+
+```
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder>{
+    
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        
+    }
+}
+```
+
+#### 2.3.5.实现方法
+
+```
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder>{
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+}
+```
+
+#### 2.3.6.添加构造器
+
+```
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder>{
+
+    private final Context context;
+
+    public LinearLayoutManagerAdapter(Context context) {
+        this.context = context;
+    }
+
+    ...
+}
+```
+
+#### 2.3.7.指定`item_view`,注意这里与ListView不同,这里不返回View,而是返回ViewHolder(自已定义的).
+
+```
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_linear, parent, false);
+        return new ViewHolder(view);
+    }
+```
+
+#### 2.3.8.添加数据源
+
+```
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder>{
+    ...
+    private final ArrayList<User> list;
+
+
+    public LinearLayoutManagerAdapter(Context context) {
+        this.context = context;
+        list = new ArrayList<>();
+    }
+    ...
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+    ...
+}
+```
+
+
+
+#### 2.3.9.实现`asd`与

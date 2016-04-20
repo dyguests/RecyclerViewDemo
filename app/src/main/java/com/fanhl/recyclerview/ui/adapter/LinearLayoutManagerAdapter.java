@@ -16,13 +16,15 @@ import java.util.List;
 /**
  * Created by fanhl on 16/4/20.
  */
-public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder> {
-    private final Context    context;
-    private final List<User> list;
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder>{
+
+    private final Context context;
+    private final ArrayList<User> list;
+
 
     public LinearLayoutManagerAdapter(Context context) {
         this.context = context;
-        this.list = new ArrayList<>();
+        list = new ArrayList<>();
     }
 
     @Override
@@ -33,48 +35,18 @@ public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayou
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(list.get(position));
+
     }
 
     @Override
     public int getItemCount() {
-        return list != null ? list.size() : 0;
+        return list.size();
     }
 
-    //-----------------------数据增删相关-------------------------------
-
-    public void addItem(User item) {
-        int positionStart = list.size();
-        list.add(item);
-        notifyItemInserted(positionStart);
-    }
-
-    public void addItems(List<User> items) {
-        int positionStart = list.size();
-        list.addAll(items);
-        notifyItemRangeInserted(positionStart, items.size());
-    }
-
-    public void clear() {
-        int itemCount = list.size();
-        list.clear();
-        notifyItemRangeRemoved(0, itemCount);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView mTextView;
-        private       User     user;
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTextView = ((TextView) itemView.findViewById(R.id.text_view));
-        }
-
-        public void bind(User user) {
-            mTextView.setText(user.getName());
-
-            this.user = user;
         }
     }
 }
