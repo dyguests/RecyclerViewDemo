@@ -16,7 +16,7 @@ dependencies {
 }
 ```
 
-## 2.添加RecyclerView
+## 2.使用RecyclerView
 
 ### 2.1.在xml中添加RecyclerView
 
@@ -236,3 +236,41 @@ public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayou
 这里注意一下,请尽量把`ViewHolder`相关的布局元素绑定,数据绑定放到`ViewHolder`中来实现,而不要放到`onCreateViewHolder()`,`onBindViewHolder()`中去实现.
 
 #### 2.3.11.其它相关代码
+
+```
+    //-----------------------数据增删相关-------------------------------
+
+    public void addItem(User item) {
+        int positionStart = list.size();
+        list.add(item);
+        notifyItemInserted(positionStart);
+    }
+
+    public void addItems(List<User> items) {
+        int positionStart = list.size();
+        list.addAll(items);
+        notifyItemRangeInserted(positionStart, items.size());
+    }
+
+    public void clear() {
+        int itemCount = list.size();
+        list.clear();
+        notifyItemRangeRemoved(0, itemCount);
+    }
+```
+
+注:这段代码是为了方便把数据增删和动画效果绑定要一起
+
+## 3.其它几种例子
+
+以下有几种不同场景的例子:(你可以运行项目后看看实际效果)
+
+LinearLayoutManagerActivity
+
+GridLayoutManagerActivity
+
+InContainerActivity
+
+# About
+
+:)

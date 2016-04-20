@@ -38,7 +38,7 @@ public class VerticalBarLayoutManagerAdapter extends RecyclerView.Adapter<Vertic
 
     @Override
     public int getItemCount() {
-        return list != null ? list.size() : 0;
+        return list.size();
     }
 
     //-----------------------数据增删相关-------------------------------
@@ -64,17 +64,17 @@ public class VerticalBarLayoutManagerAdapter extends RecyclerView.Adapter<Vertic
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mTextView;
-        private       User     user;
+        private       User     data;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTextView = ((TextView) itemView.findViewById(R.id.text_view));
         }
 
-        public void bind(User user) {
-            mTextView.setText(user.getName());
+        public void bind(User data) {
+            mTextView.setText(data.getName());
 
-            this.user = user;
+            this.data = data;
         }
     }
 }

@@ -11,19 +11,18 @@ import com.fanhl.recyclerview.R;
 import com.fanhl.recyclerview.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fanhl on 16/4/20.
  */
 public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder> {
-
-    private final Context         context;
-    private final ArrayList<User> list;
-
+    private final Context    context;
+    private final List<User> list;
 
     public LinearLayoutManagerAdapter(Context context) {
         this.context = context;
-        list = new ArrayList<>();
+        this.list = new ArrayList<>();
     }
 
     @Override
@@ -42,7 +41,28 @@ public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayou
         return list.size();
     }
 
+    //-----------------------数据增删相关-------------------------------
+
+    public void addItem(User item) {
+        int positionStart = list.size();
+        list.add(item);
+        notifyItemInserted(positionStart);
+    }
+
+    public void addItems(List<User> items) {
+        int positionStart = list.size();
+        list.addAll(items);
+        notifyItemRangeInserted(positionStart, items.size());
+    }
+
+    public void clear() {
+        int itemCount = list.size();
+        list.clear();
+        notifyItemRangeRemoved(0, itemCount);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         private final TextView mTextView;
         private       User     data;
 
