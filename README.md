@@ -44,7 +44,7 @@ LinearLayoutManagerActivity.java
 
 `mRecyclerView = ((RecyclerView) findViewById(R.id.recycler_view));`
 
-#### 2.2.2.加`LayoutManager`(布局方式)
+#### 2.2.2.添加`LayoutManager`(布局方式)
 
 ```
 mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
@@ -195,4 +195,44 @@ public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayou
 
 
 
-#### 2.3.9.实现`asd`与
+#### 2.3.9.实现`list_item`与数据的绑定
+
+```
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder>{
+    ...
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.bind(list.get(position));
+    }
+    ...
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        ...
+        public void bind(User data) {
+        }
+    }
+}
+```
+
+#### 2.3.10.在`ViewHolder`中实现布局元素的绑定与数据的绑定
+
+```
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView mTextView;
+        private       User     data;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mTextView = ((TextView) itemView.findViewById(R.id.text_view));
+        }
+
+        public void bind(User data) {
+            mTextView.setText(data.getName());
+
+            this.data = data;
+        }
+    }
+```
+
+这里注意一下,请尽量把`ViewHolder`相关的布局元素绑定,数据绑定放到`ViewHolder`中来实现,而不要放到`onCreateViewHolder()`,`onBindViewHolder()`中去实现.
+
+#### 2.3.11.其它相关代码

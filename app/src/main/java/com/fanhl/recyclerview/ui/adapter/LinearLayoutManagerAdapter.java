@@ -11,14 +11,13 @@ import com.fanhl.recyclerview.R;
 import com.fanhl.recyclerview.model.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by fanhl on 16/4/20.
  */
-public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder>{
+public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayoutManagerAdapter.ViewHolder> {
 
-    private final Context context;
+    private final Context         context;
     private final ArrayList<User> list;
 
 
@@ -35,7 +34,7 @@ public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayou
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        holder.bind(list.get(position));
     }
 
     @Override
@@ -43,10 +42,19 @@ public class LinearLayoutManagerAdapter extends RecyclerView.Adapter<LinearLayou
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView mTextView;
+        private       User     data;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mTextView = ((TextView) itemView.findViewById(R.id.text_view));
+        }
+
+        public void bind(User data) {
+            mTextView.setText(data.getName());
+
+            this.data = data;
         }
     }
 }
